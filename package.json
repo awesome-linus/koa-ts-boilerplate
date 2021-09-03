@@ -8,6 +8,7 @@
     "dev": "nodemon index.ts"
   },
   "dependencies": {
+    "knex": "^0.95.10",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-json": "^2.0.2",
