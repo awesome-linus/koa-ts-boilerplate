@@ -8,6 +8,7 @@ import {
   FetchUserRequestQuery,
   FetchUserRequestParams,
   PostUserRequestBody,
+  PatchUserRequestQuery,
 } from '~/controllers/request.d.ts/user';
 
 export const fetchUserAll = async (
@@ -86,6 +87,22 @@ export const createUser = async (
     .where('id', userId)
     .first();
   ctx.status = 201;
+
+  await next();
+};
+
+export const updateUser = async (
+  ctx: ParameterizedContext<any, Router.IRouterParamContext, any>,
+  next: Next,
+) => {
+  const query = <PatchUserRequestQuery>ctx.request.query;
+  const userId = await knex<User>('users')
+    .where('id', query.id)
+    .update(query);
+
+  ctx.body = await knex<User>('users')
+    .where('id', userId)
+    .first();
 
   await next();
 };

@@ -18,3 +18,9 @@ export interface PostUserRequestBody {
     email: string;
     password: string;
 }
+
+export interface PatchUserRequestQuery extends ParsedUrlQuery{
+    id: number;
+    email: string;
+    password: string;
+}

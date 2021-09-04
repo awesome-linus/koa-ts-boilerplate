@@ -25,9 +25,8 @@ curl -X POST -H "Content-Type: application/json" \
 "localhost:3000/api/users"
 ```
 
-### POST
+### Update User
 ```shell
-curl -X POST -H "Content-Type: application/json" \
--d '{"name": "kou"}' \
-localhost:3000
+curl -X PATCH -H "Content-Type: application/json" \
+"localhost:3000/api/users?id=1&email=updatedKou@email.com"
 ```

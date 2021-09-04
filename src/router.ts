@@ -1,5 +1,10 @@
 import Router from 'koa-router';
-import { fetchUser, fetchUserAll, createUser } from '~/controllers/UserController';
+import {
+  fetchUser,
+  fetchUserAll,
+  createUser,
+  updateUser,
+} from '~/controllers/UserController';
 
 const router = new Router();
 
@@ -11,5 +16,6 @@ router.get('/healthCheck', async (ctx, next) => {
 router.get('/api/users', fetchUserAll);
 router.get('/api/users/:userId', fetchUser);
 router.post('/api/users', createUser);
+router.patch('/api/users', updateUser);
 
 export default router;
