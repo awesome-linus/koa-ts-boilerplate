@@ -9,6 +9,7 @@ import {
   FetchUserRequestParams,
   PostUserRequestBody,
   PatchUserRequestQuery,
+  DeleteUserRequestQuery,
 } from '~/controllers/request.d.ts/user';
 
 export const fetchUserAll = async (
@@ -103,6 +104,21 @@ export const updateUser = async (
   ctx.body = await knex<User>('users')
     .where('id', userId)
     .first();
+
+  await next();
+};
+
+export const deleteUser = async (
+  ctx: ParameterizedContext<any, Router.IRouterParamContext, any>,
+  next: Next,
+) => {
+  const { id } = <DeleteUserRequestQuery>ctx.request.query;
+  await knex<User>('users')
+    .where('id', id)
+    .delete();
+
+  ctx.body = {};
+  ctx.status = 204;
 
   await next();
 };

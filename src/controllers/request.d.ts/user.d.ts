@@ -24,3 +24,7 @@ export interface PatchUserRequestQuery extends ParsedUrlQuery{
     email: string;
     password: string;
 }
+
+export interface DeleteUserRequestQuery extends ParsedUrlQuery{
+    id: number;
+}

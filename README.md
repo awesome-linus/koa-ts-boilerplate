@@ -30,3 +30,10 @@ curl -X POST -H "Content-Type: application/json" \
 curl -X PATCH -H "Content-Type: application/json" \
 "localhost:3000/api/users?id=1&email=updatedKou@email.com"
 ```
+
+### Delete User
+```shell
+curl -X DELETE -H "Content-Type: application/json" \
+-w '%{http_code}\n' \
+"localhost:3000/api/users?id=3"
+```
