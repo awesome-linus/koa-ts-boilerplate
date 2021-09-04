@@ -15,6 +15,14 @@ curl -X GET "localhost:3000/api/users/1"
 curl -X GET "localhost:3000/api/users/1?fields=id,email"
 ```
 
+### Create User
+```shell
+curl -X POST -H "Content-Type: application/json" \
+-w '%{http_code}\n' \
+-d '{"email": "kou10@email.com", "password": "password"}' \
+"localhost:3000/api/users"
+```
+
 ### POST
 ```shell
 curl -X POST -H "Content-Type: application/json" \
