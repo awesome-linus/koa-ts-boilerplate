@@ -5,26 +5,13 @@ import { knex } from './knex';
 
 const router = new Router();
 
-// Hello world
-router.get('/', async (ctx, next) => {
-  ctx.body = { msg: 'Hello world!' };
-
-  await next();
-});
-
-interface HelloRequest {
-    name: string;
-}
-
-// Hello world
-router.post('/', async (ctx, next) => {
-  const { name } = <HelloRequest>ctx.request.body;
-  ctx.body = { name };
+router.get('/healthCheck', async (ctx, next) => {
+  ctx.body = { healthCheck: 'ok' };
   await next();
 });
 
 interface FetchUsersRequestQuery extends ParsedUrlQuery{
-  first: string;
+  limit: string;
   offset: string;
   fields: string;
 }
@@ -38,7 +25,7 @@ interface User {
 }
 
 router.get('/api/users', async (ctx, next) => {
-  const { first, offset, fields } = <FetchUsersRequestQuery>ctx.request.query;
+  const { limit, offset, fields } = <FetchUsersRequestQuery>ctx.request.query;
 
   const users = knex('users');
 
@@ -50,8 +37,8 @@ router.get('/api/users', async (ctx, next) => {
   if (Number(offset) > 0) {
     users.offset(Number(offset));
   }
-  if (Number(first) > 0) {
-    users.limit(Number(first));
+  if (Number(limit) > 0) {
+    users.limit(Number(limit));
   } else {
     users.limit(10);
   }
