@@ -72,7 +72,8 @@ router.get('/api/users/:userId', async (ctx, next) => {
   const { fields } = <FetchUserRequestQuery>ctx.request.query;
 
   const users = knex<User>('users')
-    .where('id', userId);
+    .where('id', userId)
+    .first();
 
   if (!isUndefined(fields) && fields !== '') {
     users.select(fields?.split(',') as string[]);
@@ -80,6 +81,24 @@ router.get('/api/users/:userId', async (ctx, next) => {
     users.select('*');
   }
   ctx.body = await users;
+
+  await next();
+});
+
+interface PostUserRequestBody {
+  email: string;
+  passowrd: string;
+}
+
+router.post('/api/users', async (ctx, next) => {
+  const body = <PostUserRequestBody>ctx.request.body;
+  const userId = await knex<User>('users')
+    .insert(body);
+
+  ctx.body = await knex<User>('users')
+    .where('id', userId)
+    .first();
+  ctx.status = 201;
 
   await next();
 });
