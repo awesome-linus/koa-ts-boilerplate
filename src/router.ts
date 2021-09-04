@@ -13,6 +13,7 @@ router.get('/healthCheck', async (ctx, next) => {
 interface FetchUsersRequestQuery extends ParsedUrlQuery{
   limit: string;
   offset: string;
+  sort: string; // ASC: sort=updated_at, DESC: sort=-updated_at
   fields: string;
 }
 
@@ -25,7 +26,12 @@ interface User {
 }
 
 router.get('/api/users', async (ctx, next) => {
-  const { limit, offset, fields } = <FetchUsersRequestQuery>ctx.request.query;
+  const {
+    limit,
+    offset,
+    sort,
+    fields,
+  } = <FetchUsersRequestQuery>ctx.request.query;
 
   const users = knex('users');
 
@@ -42,6 +48,18 @@ router.get('/api/users', async (ctx, next) => {
   } else {
     users.limit(10);
   }
+
+  if (!isUndefined(sort) && sort !== '' && sort.length > 0) {
+    if (sort.slice(0, 1) === '-') {
+      const sortKey = sort.slice(1, sort.length);
+      users.orderBy(sortKey, 'desc');
+    } else {
+      users.orderBy(sort, 'asc');
+    }
+  } else {
+    users.orderBy('updated_at', 'desc');
+  }
+
   ctx.body = await users;
 
   await next();
