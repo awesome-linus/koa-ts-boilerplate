@@ -1,14 +1,14 @@
 import isUndefined from 'lodash/isUndefined';
 import { ParameterizedContext, Next } from 'koa';
 import Router from 'koa-router';
-import { knex } from '../knex';
-import { User } from '../domain/user';
+import { knex } from '~/knex';
+import { User } from '~/domain/user';
 import {
   FetchUsersRequestQuery,
   FetchUserRequestQuery,
   FetchUserRequestParams,
   PostUserRequestBody,
-} from './request.d.ts/user';
+} from '~/controllers/request.d.ts/user';
 
 export const fetchUserAll = async (
   ctx: ParameterizedContext<any, Router.IRouterParamContext, any>,

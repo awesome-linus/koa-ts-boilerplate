@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { fetchUser, fetchUserAll, createUser } from './controllers/UserController';
+import { fetchUser, fetchUserAll, createUser } from '~/controllers/UserController';
 
 const router = new Router();
 
