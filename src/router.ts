@@ -44,6 +44,8 @@ router.get('/api/users', async (ctx, next) => {
   }
   if (Number(first) > 0) {
     users.limit(Number(first));
+  } else {
+    users.limit(10);
   }
   ctx.body = await users;
 
