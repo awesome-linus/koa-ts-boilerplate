@@ -60,4 +60,28 @@ router.get('/api/users', async (ctx, next) => {
   await next();
 });
 
+interface FetchUserRequestQuery extends ParsedUrlQuery{
+  fields: string;
+}
+interface FetchUserRequestParams extends Record<string, string> {
+  userId: string;
+}
+
+router.get('/api/users/:userId', async (ctx, next) => {
+  const { userId } = <FetchUserRequestParams>ctx.params;
+  const { fields } = <FetchUserRequestQuery>ctx.request.query;
+
+  const users = knex<User>('users')
+    .where('id', userId);
+
+  if (!isUndefined(fields) && fields !== '') {
+    users.select(fields?.split(',') as string[]);
+  } else {
+    users.select('*');
+  }
+  ctx.body = await users;
+
+  await next();
+});
+
 export default router;
