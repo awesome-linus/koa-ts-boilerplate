@@ -23,16 +23,24 @@ router.post('/', async (ctx, next) => {
   await next();
 });
 
-interface FetchUsersRequest extends ParsedUrlQuery{
+interface FetchUsersRequestQuery extends ParsedUrlQuery{
   first: string;
   offset: string;
   fields: string;
 }
 
-router.get('/api/users', async (ctx, next) => {
-  const { first, offset, fields } = <FetchUsersRequest>ctx.request.query;
+interface User {
+  id: number;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
-  const users = knex.from('users');
+router.get('/api/users', async (ctx, next) => {
+  const { first, offset, fields } = <FetchUsersRequestQuery>ctx.request.query;
+
+  const users = knex('users');
 
   if (!isUndefined(fields) && fields !== '') {
     users.select(fields?.split(',') as string[]);
