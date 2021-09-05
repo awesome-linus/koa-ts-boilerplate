@@ -19,6 +19,8 @@ module.exports = {
         "import/no-unresolved": 0,
         "import/prefer-default-export": 0,
         "max-classes-per-file": 0,
-        "lines-between-class-members": 0
+        "lines-between-class-members": 0,
+        "arrow-parens": 0,
+        "arrow-body-style": 0,
     }
 };

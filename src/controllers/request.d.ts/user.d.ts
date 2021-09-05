@@ -28,3 +28,7 @@ export interface PatchUserRequestQuery extends ParsedUrlQuery{
 export interface DeleteUserRequestQuery extends ParsedUrlQuery{
     id: number;
 }
+
+export interface FetchUserTasksRequestParams extends Record<string, string> {
+    userId: string;
+}

@@ -10,6 +10,7 @@ import {
   PostUserRequestBody,
   PatchUserRequestQuery,
   DeleteUserRequestQuery,
+  FetchUserTasksRequestParams,
 } from '~/controllers/request.d.ts/user';
 import { retrieveKnexError } from '~/exception/knex/retrieveKnexError';
 
@@ -124,6 +125,46 @@ export const deleteUser = async (
 
   ctx.body = {};
   ctx.status = 204;
+
+  await next();
+};
+
+export const fetchUserTasks = async (
+  ctx: ParameterizedContext<any, Router.IRouterParamContext, any>,
+  next: Next,
+) => {
+  const { userId } = <FetchUserTasksRequestParams>ctx.params;
+
+  if (!isUndefined(userId) && userId !== '') {
+    const userTasks = await knex('users as u')
+      .join('tasks as t', 'u.id', '=', 't.user_id')
+      .where('u.id', userId)
+      .select(
+        'u.id as userId',
+        'u.email',
+        'u.password',
+        't.id as taskId',
+        't.title',
+        't.description',
+        't.is_complete',
+      );
+
+    const tasks = userTasks.map(ut => {
+      return {
+        id: ut.taskId,
+        title: ut.title,
+        description: ut.description,
+        is_complete: ut.is_complete,
+      };
+    });
+
+    ctx.body = {
+      id: userTasks[0].userId,
+      email: userTasks[0].email,
+      password: userTasks[0].password,
+      tasks,
+    };
+  }
 
   await next();
 };
