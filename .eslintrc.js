@@ -17,7 +17,8 @@ module.exports = {
     "rules": {
         "import/extensions": 0,
         "import/no-unresolved": 0,
-        "import/prefer-default-export": 0
-
+        "import/prefer-default-export": 0,
+        "max-classes-per-file": 0,
+        "lines-between-class-members": 0
     }
 };
