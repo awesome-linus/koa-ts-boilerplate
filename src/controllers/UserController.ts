@@ -11,6 +11,7 @@ import {
   PatchUserRequestQuery,
   DeleteUserRequestQuery,
 } from '~/controllers/request.d.ts/user';
+import { retrieveKnexError } from '~/exception/knex/retrieveKnexError';
 
 export const fetchUserAll = async (
   ctx: ParameterizedContext<any, Router.IRouterParamContext, any>,
@@ -50,7 +51,11 @@ export const fetchUserAll = async (
     users.orderBy('updated_at', 'desc');
   }
 
-  ctx.body = await users;
+  try {
+    ctx.body = await users;
+  } catch (error: any) {
+    throw retrieveKnexError(error);
+  }
 
   await next();
 };
