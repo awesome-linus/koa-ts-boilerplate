@@ -37,3 +37,9 @@ curl -X DELETE -H "Content-Type: application/json" \
 -w '%{http_code}\n' \
 "localhost:3000/api/users?id=3"
 ```
+
+### Fetch User Tasks
+```shell
+curl -X GET "http://localhost:3000/api/users/3/tasks"
+```
+
