@@ -1,4 +1,15 @@
 # koa-ts-knex
+## DB
+### Migrate
+```shell
+knex migrate:latest
+```
+
+### Seeder
+```shell
+knex seed:run 
+```
+
 ## API
 ### Fetch Users
 ```shell
