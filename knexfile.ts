@@ -10,11 +10,12 @@ module.exports = {
   },
 
   staging: {
-    client: 'postgresql',
+    client: 'mysql',
     connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password',
+      host: '127.0.0.1',
+      user: 'root',
+      password: '',
+      database: 'koa_ts_knex',
     },
     pool: {
       min: 2,
@@ -26,11 +27,12 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'mysql',
     connection: {
-      database: 'my_db',
-      user: 'username',
-      password: 'password',
+      host: '127.0.0.1',
+      user: 'root',
+      password: '',
+      database: 'koa_ts_knex',
     },
     pool: {
       min: 2,
